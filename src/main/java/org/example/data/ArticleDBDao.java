@@ -24,7 +24,7 @@ public class ArticleDBDao {
 
     public int getNextArticleID() {
         final String sql = "SELECT max(articleID) FROM Articles;";
-        return Integer.parseInt(jdbcTemplate.queryForList(sql).get(0).get("max(gameID)").toString());
+        return Integer.parseInt(jdbcTemplate.queryForList(sql).get(0).get("max(articleID)").toString()) + 1;
     }
 
     public void getAllByRole(String authorizedRole) {
@@ -40,7 +40,14 @@ public class ArticleDBDao {
 
     public void addArticle(Article article) {
         int articleID = getNextArticleID();
-
+        article.setArticleID(articleID);
+        jdbcTemplate.update("INSERT INTO Articles VALUES (?, ?, ?, ?, ?);",
+                articleID,
+                article.getArticleSubject(),
+                article.getArticleBody(),
+                article.getAuthorizedRole(),
+                article.isComplete()
+        );
     }
 
     private static final class ArticleMapper implements RowMapper<Article> {
