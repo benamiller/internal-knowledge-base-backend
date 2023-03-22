@@ -6,4 +6,44 @@ public class Article {
     private String articleBody;
     private String authorizedRole;
     private boolean isComplete;
+
+    public int getArticleID() {
+        return articleID;
+    }
+
+    public void setArticleID(int articleID) {
+        this.articleID = articleID;
+    }
+
+    public String getArticleSubject() {
+        return articleSubject;
+    }
+
+    public void setArticleSubject(String articleSubject) {
+        this.articleSubject = articleSubject;
+    }
+
+    public String getArticleBody() {
+        return articleBody;
+    }
+
+    public void setArticleBody(String articleBody) {
+        this.articleBody = articleBody;
+    }
+
+    public String getAuthorizedRole() {
+        return authorizedRole;
+    }
+
+    public void setAuthorizedRole(String authorizedRole) {
+        this.authorizedRole = authorizedRole;
+    }
+
+    public boolean isComplete() {
+        return isComplete;
+    }
+
+    public void setComplete(boolean complete) {
+        isComplete = complete;
+    }
 }
