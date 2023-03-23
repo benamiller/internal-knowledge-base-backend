@@ -29,8 +29,8 @@ public class ArticleDBDao {
     }
 
     public int getNextCommentID() {
-        final String sql = "SELECT max(commentID) FROM Comments";
-        return Integer.parseInt(jdbcTemplate.queryForList(sql).get(0).get("max(commentID").toString()) + 1;
+        final String sql = "SELECT max(commentID) FROM Comments;";
+        return Integer.parseInt(jdbcTemplate.queryForList(sql).get(0).get("max(commentID)").toString()) + 1;
     }
 
     public List<Article> getAllByRole(String authorizedRole) {
@@ -48,6 +48,7 @@ public class ArticleDBDao {
     public void addArticle(Article article) {
         int articleID = getNextArticleID();
         article.setArticleID(articleID);
+        System.out.println(article.isComplete());
         jdbcTemplate.update("INSERT INTO Articles VALUES (?, ?, ?, ?, ?);",
                 articleID,
                 article.getArticleSubject(),
@@ -85,7 +86,7 @@ public class ArticleDBDao {
             article.setArticleSubject(rs.getString("articleSubject"));
             article.setArticleBody(rs.getString("articleBody"));
             article.setAuthorizedRole(rs.getString("authorizedRole"));
-            article.setComplete(rs.getBoolean("isComplete"));
+            article.setComplete(rs.getInt("isComplete"));
             return article;
         }
     }

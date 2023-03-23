@@ -33,6 +33,7 @@ public class KBController {
     @CrossOrigin(origins = "http://localhost:3000")
     @ResponseStatus(HttpStatus.CREATED)
     public void addArticle(@RequestBody Article article) {
+        System.out.println(article.isComplete());
         articleDAO.addArticle(article);
     }
 

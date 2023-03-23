@@ -5,7 +5,7 @@ public class Article {
     private String articleSubject;
     private String articleBody;
     private String authorizedRole;
-    private boolean isComplete;
+    private int isComplete;
 
     public int getArticleID() {
         return articleID;
@@ -39,11 +39,11 @@ public class Article {
         this.authorizedRole = authorizedRole;
     }
 
-    public boolean isComplete() {
+    public int isComplete() {
         return isComplete;
     }
 
-    public void setComplete(boolean complete) {
+    public void setComplete(int complete) {
         isComplete = complete;
     }
 }
