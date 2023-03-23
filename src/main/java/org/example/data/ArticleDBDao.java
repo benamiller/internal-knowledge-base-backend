@@ -58,6 +58,11 @@ public class ArticleDBDao {
         );
     }
 
+    public void deleteArticleByID(int articleID) {
+        String sql = "DELETE FROM Articles WHERE articleID = ?";
+        jdbcTemplate.update(sql, articleID);
+    }
+
     public List<Comment> getAllCommentsByArticleID(int articleID) {
         List<Comment> arrayList = jdbcTemplate.query("SELECT * FROM Comments WHERE articleID = ?;", new CommentMapper(), articleID);
         arrayList.forEach((comment) -> {
@@ -76,6 +81,21 @@ public class ArticleDBDao {
             comment.getArticleID(),
             comment.getCommentBody()
         );
+    }
+
+    public void deleteCommentByID(int commentID) {
+        String sql = "DELETE FROM Comments WHERE commentID = ?;";
+        jdbcTemplate.update(sql, commentID);
+    }
+
+    public void setRead(int articleID) {
+        String sql = "UPDATE Articles SET readStatus = ? WHERE articleID = ?";
+        jdbcTemplate.update(sql, "T", articleID);
+    }
+
+    public void setUnread(int articleID) {
+        String sql = "UPDATE Articles SET readStatus = ? WHERE articleID = ?";
+        jdbcTemplate.update(sql, "F", articleID);
     }
 
     private static final class ArticleMapper implements RowMapper<Article> {

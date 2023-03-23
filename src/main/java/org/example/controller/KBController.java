@@ -45,4 +45,18 @@ public class KBController {
     public void addComment(@RequestBody Comment comment) {
         articleDAO.addComment(comment);
     }
+
+    @PostMapping("/article/read/{articleID}")
+    @CrossOrigin(origins = "http://localhost:3000")
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    public void setRead(@PathVariable int articleID) {
+        articleDAO.setRead(articleID);
+    }
+
+    @PostMapping("/article/unread/{articleID}")
+    @CrossOrigin(origins = "http://localhost:3000")
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    public void setUnread(@PathVariable int articleID) {
+        articleDAO.setUnread(articleID);
+    }
 }
