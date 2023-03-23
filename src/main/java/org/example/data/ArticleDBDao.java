@@ -40,7 +40,7 @@ public class ArticleDBDao {
             System.out.println(article.getArticleSubject());
             System.out.println(article.getArticleBody());
             System.out.println(article.getAuthorizedRole());
-            System.out.println(article.isComplete());
+            System.out.println(article.getReadStatus());
         }));
         return arrayList;
     }
@@ -48,13 +48,13 @@ public class ArticleDBDao {
     public void addArticle(Article article) {
         int articleID = getNextArticleID();
         article.setArticleID(articleID);
-        System.out.println(article.isComplete());
+        System.out.println("IS COMPLETE?: " + article.getReadStatus());
         jdbcTemplate.update("INSERT INTO Articles VALUES (?, ?, ?, ?, ?);",
                 articleID,
                 article.getArticleSubject(),
                 article.getArticleBody(),
                 article.getAuthorizedRole(),
-                article.isComplete()
+                article.getReadStatus()
         );
     }
 
@@ -86,7 +86,7 @@ public class ArticleDBDao {
             article.setArticleSubject(rs.getString("articleSubject"));
             article.setArticleBody(rs.getString("articleBody"));
             article.setAuthorizedRole(rs.getString("authorizedRole"));
-            article.setComplete(rs.getInt("isComplete"));
+            article.setReadStatus(rs.getString("readStatus"));
             return article;
         }
     }

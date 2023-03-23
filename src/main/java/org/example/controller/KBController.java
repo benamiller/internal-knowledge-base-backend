@@ -20,11 +20,13 @@ public class KBController {
     }
 
     @GetMapping("/article/{authorizedRole}")
+    @CrossOrigin(origins = "http://localhost:3000")
     public List<Article> getAllByRole(@PathVariable String authorizedRole) {
         return articleDAO.getAllByRole(authorizedRole);
     }
 
     @GetMapping("/comment/{articleID}")
+    @CrossOrigin(origins = "http://localhost:3000")
     public List<Comment> getAllCommentsByArticleID(@PathVariable int articleID) {
         return articleDAO.getAllCommentsByArticleID(articleID);
     }
@@ -33,7 +35,7 @@ public class KBController {
     @CrossOrigin(origins = "http://localhost:3000")
     @ResponseStatus(HttpStatus.CREATED)
     public void addArticle(@RequestBody Article article) {
-        System.out.println(article.isComplete());
+        System.out.println(article.getReadStatus());
         articleDAO.addArticle(article);
     }
 

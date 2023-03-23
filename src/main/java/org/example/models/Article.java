@@ -5,7 +5,7 @@ public class Article {
     private String articleSubject;
     private String articleBody;
     private String authorizedRole;
-    private int isComplete;
+    private String readStatus;
 
     public int getArticleID() {
         return articleID;
@@ -39,11 +39,11 @@ public class Article {
         this.authorizedRole = authorizedRole;
     }
 
-    public int isComplete() {
-        return isComplete;
+    public String getReadStatus() {
+        return readStatus;
     }
 
-    public void setComplete(int complete) {
-        isComplete = complete;
+    public void setReadStatus(String readStatus) {
+        this.readStatus = readStatus;
     }
 }
