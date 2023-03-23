@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -18,9 +19,14 @@ public class KBController {
         this.articleDAO = articleDAO;
     }
 
-    @GetMapping
+    @GetMapping("/article")
     public void getAllByRole() {
         articleDAO.getAllByRole("MARKETING");
+    }
+
+    @GetMapping("/comment/{articleID}")
+    public List<Comment> getAllCommentsByArticleID(@PathVariable int articleID) {
+        return articleDAO.getAllCommentsByArticleID(articleID);
     }
 
     @PostMapping("/article")
@@ -30,9 +36,10 @@ public class KBController {
         articleDAO.addArticle(article);
     }
 
-//    @PostMapping("/comment")
-//    @ResponseStatus(HttpStatus.CREATED)
-//    public void addComment(@RequestBody Comment comment) {
-//        articleDAO.addComment(comment);
-//    }
+    @PostMapping("/comment")
+    @CrossOrigin(origins = "http://localhost:3000")
+    @ResponseStatus(HttpStatus.CREATED)
+    public void addComment(@RequestBody Comment comment) {
+        articleDAO.addComment(comment);
+    }
 }

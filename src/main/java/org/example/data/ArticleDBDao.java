@@ -1,6 +1,7 @@
 package org.example.data;
 
 import org.example.models.Article;
+import org.example.models.Comment;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -27,6 +28,11 @@ public class ArticleDBDao {
         return Integer.parseInt(jdbcTemplate.queryForList(sql).get(0).get("max(articleID)").toString()) + 1;
     }
 
+    public int getNextCommentID() {
+        final String sql = "SELECT max(commentID) FROM Comments";
+        return Integer.parseInt(jdbcTemplate.queryForList(sql).get(0).get("max(commentID").toString()) + 1;
+    }
+
     public void getAllByRole(String authorizedRole) {
         List<Article> arrayList = jdbcTemplate.query("SELECT * FROM Articles WHERE authorizedRole = ?;", new ArticleMapper(), authorizedRole);
         arrayList.forEach((article -> {
@@ -50,6 +56,26 @@ public class ArticleDBDao {
         );
     }
 
+    public List<Comment> getAllCommentsByArticleID(int articleID) {
+        List<Comment> arrayList = jdbcTemplate.query("SELECT * FROM Comments WHERE articleID = ?;", new CommentMapper(), articleID);
+        arrayList.forEach((comment) -> {
+            System.out.println(comment.getCommentID());
+            System.out.println(comment.getArticleID());
+            System.out.println(comment.getCommentBody());
+        });
+        return arrayList;
+    }
+
+    public void addComment(Comment comment) {
+        int commentID = getNextCommentID();
+        comment.setCommentID(commentID);
+        jdbcTemplate.update("INSERT INTO Comments VALUES (?, ?, ?);",
+            commentID,
+            comment.getArticleID(),
+            comment.getCommentBody()
+        );
+    }
+
     private static final class ArticleMapper implements RowMapper<Article> {
         @Override
         public Article mapRow(ResultSet rs, int index) throws SQLException {
@@ -60,6 +86,17 @@ public class ArticleDBDao {
             article.setAuthorizedRole(rs.getString("authorizedRole"));
             article.setComplete(rs.getBoolean("isComplete"));
             return article;
+        }
+    }
+
+    private static final class CommentMapper implements RowMapper<Comment> {
+        @Override
+        public Comment mapRow(ResultSet rs, int index) throws SQLException {
+            Comment comment = new Comment();
+            comment.setCommentID(rs.getInt("commentID"));
+            comment.setArticleID(rs.getInt("articleID"));
+            comment.setCommentBody(rs.getString("commentBody"));
+            return comment;
         }
     }
 }
