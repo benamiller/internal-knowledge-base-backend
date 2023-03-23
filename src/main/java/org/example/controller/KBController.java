@@ -24,6 +24,7 @@ public class KBController {
     }
 
     @PostMapping("/article")
+    @CrossOrigin(origins = "http://localhost:3000")
     @ResponseStatus(HttpStatus.CREATED)
     public void addArticle(@RequestBody Article article) {
         articleDAO.addArticle(article);
