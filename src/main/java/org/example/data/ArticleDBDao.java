@@ -33,7 +33,7 @@ public class ArticleDBDao {
         return Integer.parseInt(jdbcTemplate.queryForList(sql).get(0).get("max(commentID").toString()) + 1;
     }
 
-    public void getAllByRole(String authorizedRole) {
+    public List<Article> getAllByRole(String authorizedRole) {
         List<Article> arrayList = jdbcTemplate.query("SELECT * FROM Articles WHERE authorizedRole = ?;", new ArticleMapper(), authorizedRole);
         arrayList.forEach((article -> {
             System.out.println(article.getArticleID());
@@ -42,6 +42,7 @@ public class ArticleDBDao {
             System.out.println(article.getAuthorizedRole());
             System.out.println(article.isComplete());
         }));
+        return arrayList;
     }
 
     public void addArticle(Article article) {

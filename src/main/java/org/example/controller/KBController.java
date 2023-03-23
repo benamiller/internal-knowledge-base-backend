@@ -19,9 +19,9 @@ public class KBController {
         this.articleDAO = articleDAO;
     }
 
-    @GetMapping("/article")
-    public void getAllByRole() {
-        articleDAO.getAllByRole("MARKETING");
+    @GetMapping("/article/{authorizedRole}")
+    public List<Article> getAllByRole(@PathVariable String authorizedRole) {
+        return articleDAO.getAllByRole(authorizedRole);
     }
 
     @GetMapping("/comment/{articleID}")
