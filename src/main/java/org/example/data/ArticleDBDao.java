@@ -98,6 +98,11 @@ public class ArticleDBDao {
         jdbcTemplate.update(sql, "F", articleID);
     }
 
+    public void deleteCommentsForArticleID(int articleID) {
+        String sql = "DELETE FROM Comments WHERE articleID = ?";
+        jdbcTemplate.update(sql, articleID);
+    }
+
     private static final class ArticleMapper implements RowMapper<Article> {
         @Override
         public Article mapRow(ResultSet rs, int index) throws SQLException {

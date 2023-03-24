@@ -39,11 +39,28 @@ public class KBController {
         articleDAO.addArticle(article);
     }
 
+    @DeleteMapping("/article/delete/{articleID}")
+    @CrossOrigin(origins = "http://localhost:3000")
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    public void deleteArticleByID(@PathVariable int articleID) {
+        // delete comments before deleting the article with the foreign key
+        System.out.println("DELETING");
+        articleDAO.deleteCommentsForArticleID(articleID);
+        articleDAO.deleteArticleByID(articleID);
+    }
+
     @PostMapping("/comment")
     @CrossOrigin(origins = "http://localhost:3000")
     @ResponseStatus(HttpStatus.CREATED)
     public void addComment(@RequestBody Comment comment) {
         articleDAO.addComment(comment);
+    }
+
+    @PostMapping("/comment/{commentID}")
+    @CrossOrigin(origins = "http://localhost:3000")
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    public void deleteCommentByID(@PathVariable int commentID) {
+        articleDAO.deleteCommentByID(commentID);
     }
 
     @PostMapping("/article/read/{articleID}")
